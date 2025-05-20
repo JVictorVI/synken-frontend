@@ -1,0 +1,71 @@
+.post {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(32, 32, 32);
+  border-radius: 10px;
+  width: 350px;
+  margin: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.post:hover {
+  background-color: rgb(40, 40, 40);
+}
+
+.postProfileHead {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.postProfileHead img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.postProfileHead img:hover {
+  border: 2px solid rgb(135, 34, 34);
+  cursor: pointer;
+}
+
+.postProfileInfo h2 {
+  color: rgb(135, 34, 34);
+  font-size: 15px;
+  margin: 1px;
+  text-align: start;
+}
+
+.postProfileInfo p {
+  color: whitesmoke;
+  margin: 1px;
+}
+
+.postProfileInfo {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.text {
+  color: whitesmoke;
+}
+
+.text p {
+  font-size: 12px;
+}
+
+.postProfileInfo span {
+  margin: 1px;
+  color: gray;
+  font-size: 9px;
+}
+
+.postImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}

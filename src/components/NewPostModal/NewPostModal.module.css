@@ -1,0 +1,133 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContainer {
+  background-color: rgb(40, 40, 40);
+  width: 370px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.modalHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1px solid #353535;
+}
+
+.closeIconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  background-color: rgb(60, 60, 60);
+  margin-left: 200px;
+  cursor: pointer;
+}
+
+.closeIconContainer:hover {
+  background-color: rgb(70, 70, 70);
+}
+
+.modalContainer textarea {
+  margin: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(50, 50, 50);
+  color: white;
+}
+
+.modalContainer textarea:focus {
+  outline: none;
+}
+
+.postButton {
+  margin: 10px;
+  background-color: rgb(165, 34, 34);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modalContainer textarea:hover {
+  background-color: rgb(60, 60, 60);
+  cursor: pointer;
+}
+
+.modalContainer .postButton:hover {
+  background-color: rgb(150, 34, 34);
+  cursor: pointer;
+}
+
+.addPictureContainer {
+  background-color: rgb(40, 40, 40);
+  border: 2px dashed rgb(135, 34, 34);
+  width: 200px;
+  border-radius: 5px;
+  padding: 8px;
+  color: rgba(255, 255, 255, 0.87);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.addPictureContainer:hover {
+  border: 2px dashed rgb(160, 34, 34);
+  background-color: rgb(50, 50, 50);
+}
+
+.addPictureContainer label {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uploadImageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.imagePreviewContainer {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagePreviewContainer img {
+  width: 350px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.deleteImageButton {
+  position: absolute;
+  top: 57%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+}
