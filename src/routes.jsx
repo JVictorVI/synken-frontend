@@ -12,6 +12,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Profile from "./pages/Profile/Profile";
 import EditProfile from "./pages/EditProfile/EditProfile";
+import Search from "./pages/Search/Search";
 
 function AppRoutes() {
   // Componente/Layout para rotas protegidas
@@ -36,10 +37,11 @@ function AppRoutes() {
         <Route element={<ProtectedLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/profile/edit" element={<EditProfile />} />
         </Route>
 
         <Route path="/profile/:username" element={<Profile />} />
-        <Route path="/profile/edit" element={<EditProfile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

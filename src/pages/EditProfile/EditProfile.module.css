@@ -3,5 +3,103 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
+}
+
+.banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(32, 32, 32);
+  border-radius: 10px;
+  width: 350px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.formUpdateUser p {
+  font-size: 13px;
+  color: lightgrey;
+}
+
+.formUpdateUser {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.formUpdateUser input {
+  width: 200px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(50, 50, 50);
+  color: white;
+  border: none;
+}
+
+.formUpdateUser input:hover {
+  background-color: rgb(60, 60, 60);
+  cursor: pointer;
+}
+
+.formUpdateUser input:focus {
+  outline: none;
+}
+
+.formUpdateUser .updateButton {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background-color: rgb(165, 34, 34);
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.formUpdateUser .updateButton:hover {
+  background-color: rgb(135, 34, 34);
+}
+
+.formUpdateUser .backButton {
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid rgb(135, 34, 34);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.formUpdateUser .backButton:hover {
+  background-color: rgb(60, 60, 60);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagePreviewContainer img {
+  margin-top: 20px;
+  width: 220px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.deleteImageButton {
+  position: absolute;
+  top: 92%;
+  left: 49%;
+  transform: translate(-50%, -50%);
+}
+
+.uploadProfilePictureContainer {
+  margin-top: 15px;
+  margin-bottom: 10px;
 }

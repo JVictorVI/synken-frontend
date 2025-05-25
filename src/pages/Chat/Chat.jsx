@@ -3,7 +3,7 @@ import styles from "./Chat.module.css";
 
 function Chat() {
   return (
-    <div className={styles.home}>
+    <div className={styles.chat}>
       <Navebar />
       <h1>Chat</h1>
     </div>

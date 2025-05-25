@@ -6,7 +6,7 @@ import { MdOutlineManageSearch } from "react-icons/md";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { IoChatbubbles } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function Navebar() {
   const selectedColor = "#871622CC";
@@ -16,24 +16,27 @@ function Navebar() {
 
   const sessionUser = JSON.parse(sessionStorage.getItem("user")) || {};
 
-  const [selectedTab, setSelectedTab] = "home";
+  const [selectedTab, setSelectedTab] = useState([]);
 
   // Determina a tab selecionada com base na rota atual
   const getSelectedTab = () => {
-    if (location.pathname.startsWith("/")) return;
-    if (location.pathname.startsWith("/search")) return "search";
-    if (location.pathname.startsWith("/chat")) return "chat";
-    if (location.pathname.startsWith("/profile")) return "profile";
+    if (location.pathname.endsWith("/")) return "home";
+    if (location.pathname.endsWith("/search")) return "search";
+    if (location.pathname.includes("/profile")) return "profile";
+    if (location.pathname.endsWith("/chat")) return "chat";
+    if (location.pathname.endsWith("/profile/" + sessionUser.username))
+      return "profile";
     return "home";
   };
 
   useEffect(() => {
-    const handleTabChange = () => {};
+    const handleTabChange = () => {
+      const currentTab = getSelectedTab();
+      setSelectedTab(currentTab);
+    };
 
     handleTabChange();
-  });
-
-  console.log("Selected Tab:", selectedTab);
+  }, [location.pathname, sessionUser.username]);
 
   return (
     <div className="NaveBar">
