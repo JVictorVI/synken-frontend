@@ -6,18 +6,16 @@ import {
   Routes,
 } from "react-router-dom";
 import Home from "./pages/Home/Home";
-import Chat from "./pages/Chat/Chat";
 import NotFound from "./pages/NotFound/NotFound";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Profile from "./pages/Profile/Profile";
 import EditProfile from "./pages/EditProfile/EditProfile";
 import Search from "./pages/Search/Search";
-
+import PublicChat from "./pages/PublicChat/PublicChat";
+import PrivateChat from "./pages/PrivateChat/PrivateChat";
 function AppRoutes() {
-  // Componente/Layout para rotas protegidas
   const ProtectedLayout = () => {
-    // Obtém os dados diretamente do sessionStorage
     const user = sessionStorage.getItem("user");
     const token = sessionStorage.getItem("token");
 
@@ -36,7 +34,8 @@ function AppRoutes() {
 
         <Route element={<ProtectedLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/chat" element={<Chat />} />
+          <Route path="/chat" element={<PublicChat />} />
+          <Route path="/chat/:username" element={<PrivateChat />} />
           <Route path="/search" element={<Search />} />
           <Route path="/profile/edit" element={<EditProfile />} />
         </Route>
