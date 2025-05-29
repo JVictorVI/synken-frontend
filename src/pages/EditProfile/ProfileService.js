@@ -2,7 +2,6 @@ import { uploadImage } from "../../pages/Register/RegisterService";
 import api from "../../components/api/api.js";
 
 export const updateUser = async (
-  idUser,
   name,
   username,
   email,
@@ -13,9 +12,8 @@ export const updateUser = async (
 
   try {
     const response = await api.put(
-      "http://localhost:8080/user/update/" + idUser,
+      "http://localhost:8080/user/update/" + username,
       {
-        idUser: idUser,
         name: name,
         username: username,
         email: email,

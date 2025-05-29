@@ -11,9 +11,10 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Profile from "./pages/Profile/Profile";
 import EditProfile from "./pages/EditProfile/EditProfile";
-import Search from "./pages/Search/Search";
+import Search from "./pages/Friends/Friends";
 import PublicChat from "./pages/PublicChat/PublicChat";
 import PrivateChat from "./pages/PrivateChat/PrivateChat";
+import Friends from "./pages/Friends/Friends";
 function AppRoutes() {
   const ProtectedLayout = () => {
     const user = sessionStorage.getItem("user");
@@ -34,9 +35,8 @@ function AppRoutes() {
 
         <Route element={<ProtectedLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/chat" element={<PublicChat />} />
           <Route path="/chat/:username" element={<PrivateChat />} />
-          <Route path="/search" element={<Search />} />
+          <Route path="/chats" element={<Friends />} />
           <Route path="/profile/edit" element={<EditProfile />} />
         </Route>
 

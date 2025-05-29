@@ -1,16 +1,17 @@
 import styles from "./Navebar.module.css";
 
 import { IoHomeSharp } from "react-icons/io5";
-import { MdOutlineManageSearch } from "react-icons/md";
+import { MdLogout } from "react-icons/md";
 
 import { MdOutlineAccountCircle } from "react-icons/md";
-import { IoChatbubbles } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import { FaUserFriends } from "react-icons/fa";
+
 function Navebar() {
-  const selectedColor = "#871622CC";
-  const unselectedColor = "#000000";
+  const selectedColor = "#7f5af0";
+  const unselectedColor = "#242629";
 
   const location = useLocation();
 
@@ -21,11 +22,12 @@ function Navebar() {
   // Determina a tab selecionada com base na rota atual
   const getSelectedTab = () => {
     if (location.pathname.endsWith("/")) return "home";
-    if (location.pathname.endsWith("/search")) return "search";
+    if (location.pathname.includes("/chat")) return "chats";
     if (location.pathname.includes("/profile")) return "profile";
-    if (location.pathname.endsWith("/chat")) return "chat";
-    if (location.pathname.endsWith("/profile/" + sessionUser.username))
-      return "profile";
+    if (location.pathname.includes("/logout")) return "logout";
+    //if (location.pathname.endsWith("/chat")) return "chat";
+    //if (location.pathname.endsWith("/profile/" + sessionUser.username))
+    //return "profile";
     return "home";
   };
 
@@ -54,25 +56,16 @@ function Navebar() {
           </button>
         </Link>
 
-        <Link to="/search">
+        <Link to="/chats">
           <button>
-            <MdOutlineManageSearch
+            <FaUserFriends
               className={styles.icon}
-              color={selectedTab === "search" ? selectedColor : unselectedColor}
+              color={selectedTab === "chats" ? selectedColor : unselectedColor}
               size={30}
             />
           </button>
         </Link>
 
-        <Link to="/chat">
-          <button>
-            <IoChatbubbles
-              className={styles.icon}
-              color={selectedTab === "chat" ? selectedColor : unselectedColor}
-              size={30}
-            />
-          </button>
-        </Link>
         <Link to={`/profile/${sessionUser.username}`}>
           <button>
             <MdOutlineAccountCircle
@@ -80,6 +73,16 @@ function Navebar() {
               color={
                 selectedTab === "profile" ? selectedColor : unselectedColor
               }
+              size={30}
+            />
+          </button>
+        </Link>
+
+        <Link to="#">
+          <button>
+            <MdLogout
+              className={styles.icon}
+              color={selectedTab === "logout" ? selectedColor : unselectedColor}
               size={30}
             />
           </button>

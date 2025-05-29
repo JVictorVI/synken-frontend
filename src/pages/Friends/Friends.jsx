@@ -1,10 +1,10 @@
 import FollowersFeed from "../../components/FollowersFeed/FollowersFeed";
 import Navebar from "../../components/Navebar/Navebar";
-import styles from "./Search.module.css";
+import styles from "./Friends.module.css";
 
-function Search() {
+function Friends() {
   return (
-    <div className={styles.search}>
+    <div className={styles.friends}>
       <title>Pesquisa</title>
       <>
         <Navebar />
@@ -14,4 +14,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default Friends;

@@ -1,7 +1,7 @@
 .post {
   display: flex;
   flex-direction: column;
-  background-color: rgb(32, 32, 32);
+  background-color: #16161a;
   border-radius: 10px;
   width: 350px;
   margin: 10px;
@@ -10,7 +10,7 @@
 }
 
 .post:hover {
-  background-color: rgb(40, 40, 40);
+  background-color: #1f1f23;
 }
 
 .postProfileHead {
@@ -27,19 +27,19 @@
 }
 
 .postProfileHead img:hover {
-  border: 2px solid rgb(135, 34, 34);
+  border: 2px solid #7f5af0;
   cursor: pointer;
 }
 
 .postProfileInfo h2 {
-  color: rgb(135, 34, 34);
+  color: #7f5af0;
   font-size: 15px;
   margin: 1px;
   text-align: start;
 }
 
 .postProfileInfo p {
-  color: whitesmoke;
+  color: #2cb67d;
   margin: 1px;
 }
 
@@ -49,17 +49,13 @@
   margin-left: 10px;
 }
 
-.text {
-  color: whitesmoke;
-}
-
 .text p {
   font-size: 12px;
 }
 
 .postProfileInfo span {
   margin: 1px;
-  color: gray;
+  color: #94a1b2;
   font-size: 9px;
 }
 

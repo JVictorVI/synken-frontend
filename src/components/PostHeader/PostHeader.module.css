@@ -14,7 +14,7 @@
 }
 
 .profileHub img:hover {
-  border: 2px solid rgb(135, 34, 34);
+  border: 2px solid #7f5af0;
   cursor: pointer;
 }
 
@@ -28,7 +28,7 @@
   border-radius: 5px;
   border: none;
   padding: 5px;
-  background-color: #353535;
+  background-color: #16161a;
 }
 
 .newPostContainer p {
@@ -37,6 +37,6 @@
 }
 
 .newPostContainer:hover {
-  border: 2px solid rgb(135, 34, 34);
+  border: 2px solid #7f5af0;
   cursor: pointer;
 }

@@ -5,3 +5,10 @@ export const formatDateString = (dateString) => {
   const year = date.getFullYear();
   return `${day}/${month}/${year}`;
 };
+
+export const formatTime = (dateString) => {
+  const data = new Date(dateString);
+  const horas = data.getHours().toString().padStart(2, "0");
+  const minutos = data.getMinutes().toString().padStart(2, "0");
+  return `${horas}:${minutos}`;
+};

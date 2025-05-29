@@ -11,7 +11,7 @@
 }
 
 .modalContainer {
-  background-color: rgb(40, 40, 40);
+  background-color: #242629;
   width: 370px;
   display: flex;
   flex-direction: column;
@@ -24,7 +24,7 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  border-bottom: 1px solid #353535;
+  border-bottom: 1px solid #242629;
 }
 
 .closeIconContainer {
@@ -32,7 +32,7 @@
   justify-content: center;
   align-items: center;
   border-radius: 15px;
-  background-color: rgb(60, 60, 60);
+  background-color: transparent;
   margin-left: 200px;
   cursor: pointer;
 }
@@ -46,7 +46,7 @@
   padding: 10px;
   border: none;
   border-radius: 5px;
-  background-color: rgb(50, 50, 50);
+  background-color: #16161a;
   color: white;
 }
 
@@ -56,7 +56,7 @@
 
 .postButton {
   margin: 10px;
-  background-color: rgb(165, 34, 34);
+  background-color: #7f5af0;
   color: white;
   border: none;
   padding: 10px;
@@ -70,13 +70,13 @@
 }
 
 .modalContainer .postButton:hover {
-  background-color: rgb(150, 34, 34);
+  background-color: #7f5af0;
   cursor: pointer;
 }
 
 .addPictureContainer {
-  background-color: rgb(40, 40, 40);
-  border: 2px dashed rgb(135, 34, 34);
+  background-color: #16161a;
+  border: 2px dashed #7f5af0;
   width: 200px;
   border-radius: 5px;
   padding: 8px;
@@ -90,7 +90,7 @@
 }
 
 .addPictureContainer:hover {
-  border: 2px dashed rgb(160, 34, 34);
+  border: 2px dashed #6c4ec9;
   background-color: rgb(50, 50, 50);
 }
 

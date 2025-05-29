@@ -1,7 +1,6 @@
 import styles from "./Register.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import { IoEnterOutline } from "react-icons/io5";
-import logo from "../../assets/logo.png";
 import { useState } from "react";
 import { registerUser } from "./RegisterService";
 
@@ -43,7 +42,6 @@ function Register() {
       <title> Cadastro | Synken </title>
 
       <div className={styles.register}>
-        <img src={logo} className={styles.imgLogo} alt="Synken" />
         <div className={styles.container}>
           {isLoading ? (
             <Loader />
@@ -89,7 +87,7 @@ function Register() {
               </form>
               <hr />
               <div className={styles.loginContainer}>
-                <IoEnterOutline size={20} color="#AF2222" />
+                <IoEnterOutline size={20} color="7f5af0" />
                 <a href="/sign-in">
                   <span> Já possui uma conta? </span> Entrar
                 </a>

@@ -1,7 +1,7 @@
 .profileBanner {
   display: flex;
   flex-direction: row;
-  background-color: rgb(32, 32, 32);
+  background-color: #16161a;
   border-radius: 10px;
   width: 350px;
   margin: 10px;
@@ -10,7 +10,7 @@
 }
 
 .profileBanner:hover {
-  background-color: rgb(40, 40, 40);
+  background-color: #1f1f23;
 }
 
 .profileHead {
@@ -29,19 +29,19 @@
 }
 
 .profileHead img:hover {
-  border: 2px solid rgb(135, 34, 34);
+  border: 2px solid #7f5af0;
   cursor: pointer;
 }
 
 .profileInfo h2 {
-  color: rgb(135, 34, 34);
+  color: #7f5af0;
   font-size: 20px;
   margin: 1px;
   text-align: start;
 }
 
 .profileInfo p {
-  color: lightgray;
+  color: #2cb67d;
   font-size: 15px;
   margin: 1px;
 }

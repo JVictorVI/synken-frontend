@@ -35,7 +35,6 @@ function EditProfile() {
     setIsLoading(true);
 
     const updatedUser = await updateUser(
-      sessionUser.idUser,
       name,
       username,
       sessionUser.email,

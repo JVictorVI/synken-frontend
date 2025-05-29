@@ -2,7 +2,6 @@ import styles from "./Login.module.css";
 import { MdPersonAddAlt1 } from "react-icons/md";
 import { MdLockReset } from "react-icons/md";
 
-import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "./LoginService";
 import { useState } from "react";
@@ -45,7 +44,6 @@ function Login() {
       <title> Login | Synken </title>
 
       <div className={styles.login}>
-        <img src={logo} className={styles.imgLogo} alt="Synken" />
         <div className={styles.container}>
           {isLoading ? (
             <Loader />
@@ -71,7 +69,7 @@ function Login() {
                 />
 
                 <div className={styles.forgotPassword}>
-                  <MdLockReset size={15} color="#AF2222" />
+                  <MdLockReset size={15} color="#7f5af0" />
                   <a href="/forgot-password">Esqueceu sua senha?</a>{" "}
                 </div>
 
@@ -81,7 +79,7 @@ function Login() {
               </form>
               <hr />
               <div className={styles.registerContainer}>
-                <MdPersonAddAlt1 size={20} color="#AF2222" />
+                <MdPersonAddAlt1 size={20} color="#7f5af0" />
                 <a href="/sign-up">
                   <span> Não possui uma conta? </span> Criar conta
                 </a>
