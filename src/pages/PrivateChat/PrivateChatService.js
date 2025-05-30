@@ -1,48 +1,57 @@
-import CryptoJS from "crypto-js";
+import webstomp from "webstomp-client";
+import api from "../../components/api/api";
+import {
+  decryptMessage,
+  encryptMessage,
+} from "../../Service/EncryptionService";
+import { getDateTime } from "../../Service/GeneralService";
 
-export const generateChatKey = (userId1, userId2) => {
-  const sortedIds = [userId1, userId2].sort();
-  const keySeed = `${sortedIds[0]}:${sortedIds[1]}`;
-  return CryptoJS.SHA256(keySeed).toString(); // 256 bits = 64 hex chars
-};
+export const connectPrivateChat = (username, token, key, onMessage) => {
+  const socket = new WebSocket("ws://localhost:8080/ws-chat");
+  const client = webstomp.over(socket);
 
-export const encryptMessage = (message, key) => {
-  const iv = CryptoJS.lib.WordArray.random(16);
-  const encrypted = CryptoJS.AES.encrypt(
-    message,
-    CryptoJS.enc.Utf8.parse(key),
-    {
-      iv: iv,
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7,
-    }
-  );
+  client.connect({ Authorization: `Bearer ${token}` }, () => {
+    console.log("Conectado");
 
-  const result = {
-    ciphertext: encrypted.ciphertext.toString(CryptoJS.enc.Base64),
-    iv: iv.toString(CryptoJS.enc.Hex),
-  };
-
-  return JSON.stringify(result);
-};
-
-export const decryptMessage = (encryptedData, key) => {
-  const iv = CryptoJS.enc.Hex.parse(encryptedData.iv);
-  const ciphertext = CryptoJS.enc.Base64.parse(encryptedData.ciphertext);
-
-  const cipherParams = CryptoJS.lib.CipherParams.create({
-    ciphertext: ciphertext,
+    client.subscribe(`/topic/private.${username}`, (msg) => {
+      const body = JSON.parse(msg.body);
+      const decryptedContent = decryptMessage(body.content, key);
+      onMessage({ ...body, content: decryptedContent });
+    });
   });
 
-  const decrypted = CryptoJS.AES.decrypt(
-    cipherParams,
-    CryptoJS.enc.Utf8.parse(key),
-    {
-      iv: iv,
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7,
-    }
-  );
+  return client;
+};
 
-  return decrypted.toString(CryptoJS.enc.Utf8);
+export const fetchMessages = async (sender, receiver, key) => {
+  const response = await api.get(`/chat/messages/${sender}/${receiver}`);
+  const decrypted = response.data.messages.map((msg) => ({
+    ...msg,
+    content: decryptMessage(msg.content, key),
+  }));
+
+  return {
+    chatInfo: response.data,
+    messages: sortMessagesByDate(decrypted),
+  };
+};
+
+export const sendPrivateMessage = (client, message, key, setMessages) => {
+  const encryptedContent = encryptMessage(message.content, key);
+  const payload = {
+    ...message,
+    content: encryptedContent,
+    createdAt: getDateTime(),
+  };
+
+  if (client?.connected) {
+    client.send("/app/chat.sendPrivate", JSON.stringify(payload), {});
+    setMessages((prev) => [...prev, { ...payload, content: message.content }]);
+  }
+};
+
+export const sortMessagesByDate = (msgArray) => {
+  return [...msgArray].sort(
+    (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+  );
 };

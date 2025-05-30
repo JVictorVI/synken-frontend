@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Post from "../Post/Post";
 import { getPosts } from "./FeedService";
 
 import styles from "./Feed.module.css";
 
-function Feed() {
-  const [posts, setPosts] = useState([]);
-
+function Feed({ posts, setPosts }) {
   useEffect(() => {
     const fetchPosts = async () => {
       const data = await getPosts();

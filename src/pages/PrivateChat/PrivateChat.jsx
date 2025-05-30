@@ -1,15 +1,19 @@
 import { useState, useEffect, useRef } from "react";
-import webstomp from "webstomp-client";
 
 import default_pfp from "../../assets/undefined_pfp.png";
 import style from "./PrivateChat.module.css";
 import Navebar from "../../components/Navebar/Navebar";
 
-import api from "../../components/api/api";
 import { formatDateString, formatTime } from "../../Service/GeneralService";
 
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import {
+  connectPrivateChat,
+  fetchMessages,
+  sendPrivateMessage,
+} from "./PrivateChatService";
+import { deriveSymmetricKey } from "../../Service/EncryptionService";
 
 function PrivateChat() {
   const [chatContent, setChatContent] = useState([]);
@@ -18,45 +22,33 @@ function PrivateChat() {
 
   const chatUser = JSON.parse(sessionStorage.getItem("chatUser"));
   const sessionUser = JSON.parse(sessionStorage.getItem("user"));
+  const token = sessionStorage.getItem("token");
 
-  const socket = new WebSocket("ws://localhost:8080/ws-chat");
-  const client = webstomp.over(socket);
+  const key = deriveSymmetricKey(sessionUser.id, chatUser.id);
   const clientRef = useRef(null);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Busca as mensagens anteriores entre os usuários
-    api
-      .get(`/chat/messages/${sessionUser.username}/${chatUser.username}`)
-      .then((response) => {
-        console.log("Mensagens recebidas:", response.data.messages);
-        setChatContent(response.data);
-        setMessages(response.data.messages);
+    fetchMessages(sessionUser.username, chatUser.username, key)
+      .then(({ chatInfo, messages }) => {
+        setChatContent(chatInfo);
+        setMessages(messages);
       })
-      .catch((error) => {
-        console.error("Erro ao buscar mensagens:", error);
-      });
+      .catch((err) => console.error("Erro ao buscar mensagens:", err));
   }, []);
 
   useEffect(() => {
-    client.connect(
-      {
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      () => {
-        console.log("Conectado");
-
-        // Assina o "tópico privado público"
-        client.subscribe(`/topic/private.${sessionUser.username}`, (msg) => {
-          const body = JSON.parse(msg.body);
-          console.log("Recebida:", body);
-          setMessages((prev) => [...prev, body]);
-        });
-
-        clientRef.current = client;
+    const client = connectPrivateChat(
+      sessionUser.username,
+      token,
+      key,
+      (newMessage) => {
+        setMessages((prev) => [...prev, newMessage]);
       }
     );
+
+    clientRef.current = client;
 
     return () => {
       if (client.connected) {
@@ -66,22 +58,14 @@ function PrivateChat() {
   }, []);
 
   const sendMessage = () => {
-    const chatMessage = {
+    const message = {
       senderUsername: sessionUser.username,
-      receiverUsername: chatUser.username, // o nome da pessoa para quem vai enviar
+      receiverUsername: chatUser.username,
       content: input,
     };
 
-    if (clientRef.current?.connected) {
-      clientRef.current.send(
-        "/app/chat.sendPrivate",
-        JSON.stringify(chatMessage),
-        {}
-      );
-
-      setMessages((prev) => [...prev, chatMessage]);
-      setInput("");
-    }
+    sendPrivateMessage(clientRef.current, message, key, setMessages);
+    setInput("");
   };
 
   return (

@@ -6,7 +6,7 @@ import { createPost } from "./PostService";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../Loader/Loader";
 
-function NewPostModal({ user, isModalOpen, setIsModalOpen }) {
+function NewPostModal({ user, isModalOpen, setIsModalOpen, posts, setPosts }) {
   const [postContent, setPostContent] = useState("");
   const [postImage, setPostImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
@@ -22,7 +22,7 @@ function NewPostModal({ user, isModalOpen, setIsModalOpen }) {
 
     setIsLoading(true);
 
-    const createdPost = await createPost(postContent, imageFile, user.idUser);
+    const createdPost = await createPost(postContent, imageFile, user.username);
 
     if (createdPost) {
       toast.success("Post criado com sucesso!");
@@ -30,6 +30,7 @@ function NewPostModal({ user, isModalOpen, setIsModalOpen }) {
       setPostImage(null);
       setImageFile(null);
       setIsModalOpen(false);
+      setPosts([createdPost, ...posts]);
     }
 
     setIsLoading(false);

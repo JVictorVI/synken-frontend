@@ -9,9 +9,12 @@ import { useEffect, useState } from "react";
 
 import { FaUserFriends } from "react-icons/fa";
 
+import LogoutModal from "../LogoutModal/LogoutModal";
+
 function Navebar() {
   const selectedColor = "#7f5af0";
   const unselectedColor = "#242629";
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const location = useLocation();
 
@@ -19,15 +22,12 @@ function Navebar() {
 
   const [selectedTab, setSelectedTab] = useState([]);
 
-  // Determina a tab selecionada com base na rota atual
   const getSelectedTab = () => {
     if (location.pathname.endsWith("/")) return "home";
     if (location.pathname.includes("/chat")) return "chats";
     if (location.pathname.includes("/profile")) return "profile";
     if (location.pathname.includes("/logout")) return "logout";
-    //if (location.pathname.endsWith("/chat")) return "chat";
-    //if (location.pathname.endsWith("/profile/" + sessionUser.username))
-    //return "profile";
+
     return "home";
   };
 
@@ -79,7 +79,7 @@ function Navebar() {
         </Link>
 
         <Link to="#">
-          <button>
+          <button onClick={() => setIsModalOpen(true)}>
             <MdLogout
               className={styles.icon}
               color={selectedTab === "logout" ? selectedColor : unselectedColor}
@@ -88,6 +88,7 @@ function Navebar() {
           </button>
         </Link>
       </div>
+      <LogoutModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </div>
   );
 }

@@ -8,6 +8,7 @@ import NewPostModal from "../../components/NewPostModal/NewPostModal";
 
 function Home() {
   const [user, setUser] = useState({});
+  const [posts, setPosts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -29,8 +30,10 @@ function Home() {
           user={user}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
+          posts={posts}
+          setPosts={setPosts}
         />
-        <Feed />
+        <Feed posts={posts} setPosts={setPosts} />
       </>
     </div>
   );

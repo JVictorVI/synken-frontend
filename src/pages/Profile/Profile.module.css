@@ -14,7 +14,7 @@
   gap: 20px;
   width: 370px;
   padding-block: 10px;
-  background-color: rgb(32, 32, 32);
+  background-color: #16161a;
   border-radius: 10px;
   margin-bottom: 10px;
 }
@@ -48,27 +48,11 @@
 
 .status p {
   margin: 10px;
-  color: rgb(135, 34, 34);
-}
-
-.logoContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  width: 370px;
-  background-color: rgb(32, 32, 32);
-  border-radius: 10px;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  font-size: 25px;
-  color: rgb(135, 34, 34);
-  font-size: 15px;
+  color: #7f5af0;
 }
 
 .container button {
-  background-color: rgb(135, 34, 34);
+  background-color: #7f5af0;
   color: white;
   border: none;
   border-radius: 5px;
@@ -77,11 +61,11 @@
   cursor: pointer;
 }
 button:hover {
-  background-color: darkred;
+  background-color: #6c4ce0;
 }
 
 .container .sendMessageButton {
-  background-color: blue;
+  background-color: #2cb67d;
   color: white;
   border: none;
   border-radius: 5px;
@@ -91,5 +75,5 @@ button:hover {
 }
 
 .sendMessageButton:hover {
-  background-color: darkblue;
+  background-color: #28a745;
 }

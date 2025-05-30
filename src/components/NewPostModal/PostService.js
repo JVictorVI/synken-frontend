@@ -1,12 +1,12 @@
 import { uploadImage } from "../../pages/Register/RegisterService";
 import api from "../../components/api/api.js";
 
-export const createPost = async (postContent, postImage, userID) => {
-  let imgURL = await uploadImage(postImage);
+export const createPost = async (postContent, postImage, username) => {
+  let imgURL = postImage ? await uploadImage(postImage) : null;
 
   try {
     const response = await api.post("http://localhost:8080/post/new", {
-      idUser: userID,
+      username: username,
       content: postContent,
       imgPost: imgURL,
     });
