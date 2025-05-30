@@ -1,11 +1,11 @@
-import { uploadImage } from "../../pages/Register/RegisterService";
 import api from "../../components/api/api.js";
+import { uploadImage } from "../../Service/GeneralService.js";
 
 export const createPost = async (postContent, postImage, username) => {
   let imgURL = postImage ? await uploadImage(postImage) : null;
 
   try {
-    const response = await api.post("http://localhost:8080/post/new", {
+    const response = await api.post("/post/new", {
       username: username,
       content: postContent,
       imgPost: imgURL,

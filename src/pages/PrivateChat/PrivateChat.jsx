@@ -4,16 +4,23 @@ import default_pfp from "../../assets/undefined_pfp.png";
 import style from "./PrivateChat.module.css";
 import Navebar from "../../components/Navebar/Navebar";
 
-import { formatDateString, formatTime } from "../../Service/GeneralService";
+import webstomp from "webstomp-client";
+
+import {
+  formatDateString,
+  formatTime,
+  getDateTime,
+} from "../../Service/GeneralService";
 
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { sortMessagesByDate } from "./PrivateChatService";
 import {
-  connectPrivateChat,
-  fetchMessages,
-  sendPrivateMessage,
-} from "./PrivateChatService";
-import { deriveSymmetricKey } from "../../Service/EncryptionService";
+  decryptMessage,
+  deriveSymmetricKey,
+  encryptMessage,
+} from "../../Service/EncryptionService";
+import api from "../../components/api/api";
 
 function PrivateChat() {
   const [chatContent, setChatContent] = useState([]);
@@ -27,28 +34,48 @@ function PrivateChat() {
   const key = deriveSymmetricKey(sessionUser.id, chatUser.id);
   const clientRef = useRef(null);
 
+  const socket = new WebSocket(import.meta.env.VITE_WEBSOCKET_URL);
+  const client = webstomp.over(socket);
+  client.debug = () => {};
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchMessages(sessionUser.username, chatUser.username, key)
-      .then(({ chatInfo, messages }) => {
-        setChatContent(chatInfo);
-        setMessages(messages);
-      })
-      .catch((err) => console.error("Erro ao buscar mensagens:", err));
+    const fetchMessages = async () => {
+      try {
+        const response = await api.get(
+          `/chat/messages/${sessionUser.username}/${chatUser.username}`
+        );
+
+        const decryptedMessages = response.data.messages.map((msg) => ({
+          ...msg,
+          content: decryptMessage(msg.content, key),
+        }));
+        const sortedMessages = sortMessagesByDate(decryptedMessages);
+        setChatContent(response.data);
+        setMessages(sortedMessages);
+      } catch (error) {
+        console.error("Erro ao buscar mensagens:", error);
+      }
+    };
+
+    fetchMessages();
   }, []);
 
   useEffect(() => {
-    const client = connectPrivateChat(
-      sessionUser.username,
-      token,
-      key,
-      (newMessage) => {
-        setMessages((prev) => [...prev, newMessage]);
-      }
-    );
+    client.connect({ Authorization: `Bearer ${token}` }, () => {
+      client.subscribe(`/topic/private.${sessionUser.username}`, (msg) => {
+        const body = JSON.parse(msg.body);
+        const decryptedContent = decryptMessage(body.content, key);
 
-    clientRef.current = client;
+        setMessages((prev) => [
+          ...prev,
+          { ...body, content: decryptedContent },
+        ]);
+      });
+
+      clientRef.current = client;
+    });
 
     return () => {
       if (client.connected) {
@@ -58,16 +85,33 @@ function PrivateChat() {
   }, []);
 
   const sendMessage = () => {
-    const message = {
+    const encryptedContent = encryptMessage(input, key);
+
+    const chatMessage = {
       senderUsername: sessionUser.username,
-      receiverUsername: chatUser.username,
-      content: input,
+      receiverUsername: chatUser.username, // o nome da pessoa para quem vai enviar
+      content: encryptedContent, // conteúdo criptografado
+      createdAt: getDateTime(), // data e hora atual formatada
     };
 
-    sendPrivateMessage(clientRef.current, message, key, setMessages);
-    setInput("");
-  };
+    if (clientRef.current?.connected) {
+      clientRef.current.send(
+        "/app/chat.sendPrivate",
+        JSON.stringify(chatMessage),
+        {}
+      );
 
+      setMessages((prev) => [
+        ...prev,
+        {
+          ...chatMessage,
+          content: decryptMessage(encryptedContent, key),
+        },
+      ]);
+
+      setInput("");
+    }
+  };
   return (
     <div className={style.privateChat}>
       <Navebar />

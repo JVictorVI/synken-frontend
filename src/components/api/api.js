@@ -1,8 +1,9 @@
-// src/api.js
 import axios from "axios";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 const api = axios.create({
-  baseURL: "http://localhost:8080", // URL base do seu backend
+  baseURL: backendUrl,
 });
 
 // Interceptor para adicionar o token automaticamente
@@ -24,7 +25,6 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Token inválido ou expirado
       sessionStorage.removeItem("token");
       window.location.href = "/login";
     }

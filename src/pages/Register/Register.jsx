@@ -2,7 +2,7 @@ import styles from "./Register.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import { IoEnterOutline } from "react-icons/io5";
 import { useState } from "react";
-import { registerUser } from "./RegisterService";
+import { registerUser, validatePassword } from "./RegisterService";
 
 import Loader from "../../components/Loader/Loader";
 
@@ -19,6 +19,13 @@ function Register() {
 
     if (!email || !name || !username || !password) {
       toast.warn("Preencha todos os campos!");
+      return;
+    }
+
+    if (validatePassword(password) === false) {
+      toast.warn(
+        "A senha deve ter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais."
+      );
       return;
     }
 

@@ -13,14 +13,14 @@
   margin-bottom: 20px;
   padding: 15px;
   background-color: transparent;
-  border: 1px solid #aa2222;
+  border: 1px solid #75a;
   border-radius: 5px;
   cursor: pointer;
-  color: #aa2222;
+  color: #75a;
 }
 
 .errorContainer button:hover {
-  background-color: #aa2222;
-  box-shadow: 1px 1px 5px #aa2222;
+  background-color: #75a;
+  box-shadow: 1px 1px 5px #75a;
   color: whitesmoke;
 }

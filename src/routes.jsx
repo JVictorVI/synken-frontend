@@ -11,8 +11,6 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Profile from "./pages/Profile/Profile";
 import EditProfile from "./pages/EditProfile/EditProfile";
-import Search from "./pages/Friends/Friends";
-import PublicChat from "./pages/PublicChat/PublicChat";
 import PrivateChat from "./pages/PrivateChat/PrivateChat";
 import Friends from "./pages/Friends/Friends";
 function AppRoutes() {
@@ -38,9 +36,9 @@ function AppRoutes() {
           <Route path="/chat/:username" element={<PrivateChat />} />
           <Route path="/chats" element={<Friends />} />
           <Route path="/profile/edit" element={<EditProfile />} />
+          <Route path="/profile/:username" element={<Profile />} />
         </Route>
 
-        <Route path="/profile/:username" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

@@ -2,7 +2,7 @@ import api from "../api/api.js";
 
 export const getAllUsers = async (loggedUsername) => {
   try {
-    const response = await api.get("http://localhost:8080/users");
+    const response = await api.get("/users");
 
     const filteredUsers = response.data.filter(
       (user) => user.username !== loggedUsername

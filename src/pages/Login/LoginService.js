@@ -1,8 +1,8 @@
-import axios from "axios";
+import api from "../../components/api/api";
 
 export const loginUser = async (email, password) => {
   try {
-    const response = await axios.post("http://localhost:8080/login", {
+    const response = await api.post("/login", {
       email,
       password,
     });

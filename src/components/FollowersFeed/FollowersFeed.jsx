@@ -22,13 +22,19 @@ function FollowersFeed() {
 
   return (
     <div>
-      {users.map((user) => (
-        <FollowerHeader
-          key={user.id}
-          user={user}
-          onChatClick={handleChatClick}
-        />
-      ))}
+      {users.length > 0 ? (
+        <>
+          {users.map((user) => (
+            <FollowerHeader
+              key={user.id}
+              user={user}
+              onChatClick={handleChatClick}
+            />
+          ))}
+        </>
+      ) : (
+        <h3>Nenhum amigo disponível para conversar...</h3>
+      )}
     </div>
   );
 }
