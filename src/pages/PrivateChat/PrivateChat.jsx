@@ -64,15 +64,18 @@ function PrivateChat() {
 
   useEffect(() => {
     client.connect({ Authorization: `Bearer ${token}` }, () => {
-      client.subscribe(`/topic/private.${sessionUser.username}`, (msg) => {
-        const body = JSON.parse(msg.body);
-        const decryptedContent = decryptMessage(body.content, key);
+      client.subscribe(
+        import.meta.env.VITE_WEBSOCKET_TOPIC + `.${sessionUser.username}`,
+        (msg) => {
+          const body = JSON.parse(msg.body);
+          const decryptedContent = decryptMessage(body.content, key);
 
-        setMessages((prev) => [
-          ...prev,
-          { ...body, content: decryptedContent },
-        ]);
-      });
+          setMessages((prev) => [
+            ...prev,
+            { ...body, content: decryptedContent },
+          ]);
+        }
+      );
 
       clientRef.current = client;
     });
@@ -96,7 +99,7 @@ function PrivateChat() {
 
     if (clientRef.current?.connected) {
       clientRef.current.send(
-        "/app/chat.sendPrivate",
+        import.meta.env.VITE_SEND_TOPIC,
         JSON.stringify(chatMessage),
         {}
       );
