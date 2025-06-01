@@ -36,7 +36,7 @@ function PrivateChat() {
 
   const socket = new WebSocket(import.meta.env.VITE_WEBSOCKET_URL);
   const client = webstomp.over(socket);
-  client.debug = () => {};
+  //client.debug = () => {};
 
   const navigate = useNavigate();
 
