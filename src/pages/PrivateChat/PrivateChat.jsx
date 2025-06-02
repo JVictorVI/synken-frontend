@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import default_pfp from "../../assets/undefined_pfp.png";
 import style from "./PrivateChat.module.css";
 import Navebar from "../../components/Navebar/Navebar";
-
+import Loader from "../../components/Loader/Loader";
 import webstomp from "webstomp-client";
 
 import {
@@ -26,6 +26,7 @@ function PrivateChat() {
   const [chatContent, setChatContent] = useState([]);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const chatUser = JSON.parse(sessionStorage.getItem("chatUser"));
   const sessionUser = JSON.parse(sessionStorage.getItem("user"));
@@ -42,6 +43,7 @@ function PrivateChat() {
 
   useEffect(() => {
     const fetchMessages = async () => {
+      setLoading(true);
       try {
         const response = await api.get(
           `/chat/messages/${sessionUser.username}/${chatUser.username}`
@@ -57,6 +59,7 @@ function PrivateChat() {
       } catch (error) {
         console.error("Erro ao buscar mensagens:", error);
       }
+      setLoading(false);
     };
 
     fetchMessages();
@@ -142,46 +145,54 @@ function PrivateChat() {
           </span>
         ) : null}
 
-        {messages.length > 0 ? (
-          messages.map((msg, i) => (
-            <div
-              className={
-                msg.senderUsername === sessionUser.username
-                  ? style.userMessage
-                  : style.friendMessage
-              }
-              key={i}
-            >
-              {msg.senderUsername === sessionUser.username ? (
-                <span>
-                  {" "}
-                  {formatTime(msg.createdAt)}, {formatDateString(msg.createdAt)}
-                </span>
-              ) : null}
-              <div
-                key={i}
-                className={
-                  msg.senderUsername === sessionUser.username
-                    ? style.userMessageBox
-                    : style.friendMessageBox
-                }
-              >
-                <p>{msg.content}</p>
-              </div>
-
-              {msg.senderUsername != sessionUser.username ? (
-                <span>
-                  {" "}
-                  {formatTime(msg.createdAt)}, {formatDateString(msg.createdAt)}
-                </span>
-              ) : null}
-            </div>
-          ))
+        {loading ? (
+          <Loader />
         ) : (
-          <p className={style.noMessages}>
-            Mande uma mensagem para {chatUser.username} para iniciar uma nova
-            conversa!
-          </p>
+          <>
+            {messages.length > 0 ? (
+              messages.map((msg, i) => (
+                <div
+                  className={
+                    msg.senderUsername === sessionUser.username
+                      ? style.userMessage
+                      : style.friendMessage
+                  }
+                  key={i}
+                >
+                  {msg.senderUsername === sessionUser.username ? (
+                    <span>
+                      {" "}
+                      {formatTime(msg.createdAt)},{" "}
+                      {formatDateString(msg.createdAt)}
+                    </span>
+                  ) : null}
+                  <div
+                    key={i}
+                    className={
+                      msg.senderUsername === sessionUser.username
+                        ? style.userMessageBox
+                        : style.friendMessageBox
+                    }
+                  >
+                    <p>{msg.content}</p>
+                  </div>
+
+                  {msg.senderUsername != sessionUser.username ? (
+                    <span>
+                      {" "}
+                      {formatTime(msg.createdAt)},{" "}
+                      {formatDateString(msg.createdAt)}
+                    </span>
+                  ) : null}
+                </div>
+              ))
+            ) : (
+              <p className={style.noMessages}>
+                Mande uma mensagem para {chatUser.username} para iniciar uma
+                nova conversa!
+              </p>
+            )}
+          </>
         )}
 
         <div className={style.inputField}>
