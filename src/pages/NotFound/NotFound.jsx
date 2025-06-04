@@ -7,7 +7,7 @@ function NotFound() {
     <div className="404Error">
       <title>Página não encontrada | Synken </title>
       <div className={styles.errorContainer}>
-        <TbError404Off size={150} color="#AA2222" />
+        <TbError404Off size={150} color="#7f5af0" />
         <h1>Página não encontrada</h1>
         <p>O conteúdo desta página não foi encontrado ou não existe</p>
         <Link to="/">
