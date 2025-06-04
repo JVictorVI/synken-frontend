@@ -55,17 +55,17 @@ function Profile() {
         <div className={styles.container}>
           <div className={styles.status}>
             <p>Posts</p>
-            <span>{profile.posts ? profile.posts.length : 20}</span>
+            <span>{profile.posts ? profile.posts.length : 0}</span>
           </div>
 
           <div className={styles.status}>
             <p>Seguidores</p>
-            <span>{profile.posts ? profile.posts.length : 20}</span>
+            <span>{profile.posts ? profile.posts.length : 0}</span>
           </div>
 
           <div className={styles.status}>
             <p>Seguindo</p>
-            <span>{profile.posts ? profile.posts.length : 20}</span>
+            <span>{profile.posts ? profile.posts.length : 0}</span>
           </div>
         </div>
       </div>
